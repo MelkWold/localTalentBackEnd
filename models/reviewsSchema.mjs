@@ -1,30 +1,36 @@
 import mongoose from "mongoose";
-// import Tasks from "./"
-// import Users from "./"
+import Tasks from "./taskSchema.mjs";
+import Users from "./usersSchema.mjs";
 
 const reviewsSchema = new mongoose.Schema({
-
-    customerName: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Users",
-        required:true }, // Is it better to bring this from Users or Tasks?
-    providerName: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Users",
-        required:true }, // Is it better to bring this from Users or Tasks?
-    service: {
+ 
+    task: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Tasks",
-        required:true}, // Is it better to bring this from Users or Tasks?
-    reviewProvider: { type: string, required:true }, // What'd be the best way to do this?
-    reviewCustomer: { type: string, required:true } // What'd be the best way to do this?
-
-
-});
+        required:true}, 
+    rating: {
+        type: Number,
+        min:1,
+        max:5,
+        required:true
+    },
+    comment: {
+        type: String,
+        maxlength: 500,
+    },
+    reviewer: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users", 
+        required:true }, 
+    reviewee: { type: mongoose.Schema.Types.ObjectId,
+        ref: "Users", 
+        required:true } 
+}, { timestamps: true });
 
 
 // Create indices
-transactionsSchema.index({reviewProvider: 1});
-transactionsSchema.index({reviewCustomer: 1});
+reviewsSchema.index({task: 1});
+reviewsSchema.index({reviewer: 1});
+reviewsSchema.index({reviewee: 1});
 
 export default mongoose.model("Reviews", reviewsSchema);

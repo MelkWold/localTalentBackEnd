@@ -1,36 +1,45 @@
 import mongoose from 'mongoose';
-// import User from "./"
+import Users from "./usersSchema.mjs";
 
 
 const taskSchema = new mongoose.Schema({
-    customerName: { 
+    customer: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Users",
         required:true },
-    amountPaid: { type: Number, required:true },
-    service: {
+    provider: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Users",
-        required:true}, // bring this from userSchema
+        required:true
+    },
+    amountPaid: { type: Number, required:true, min:0 },
+    service: {
+        type: String, 
+        required:true,
+        trim: true
+    },
     taskStatus: {
         type: String, 
-        enum: ["In Progress", "Completed"],
+        enum: ["In Progress", "Pending", "Completed"],
         required: true,
         default: "Pending"
     },
     paymentStatus: {
         type: String, 
-        enum: ["Pending", "Completed", "Other"],
+        enum: ["Pending", "Completed", "Failed"],
         required: true,
         default: "Pending"
     }
 
-});
+}, { timestamps: true });
 
 // Create indices for fast quering
-userSchema.index({amountPaid: 1});
-userSchema.index({taskStatus: 1});
-userSchema.index({service: 1});
+taskSchema.index({customer: 1});
+taskSchema.index({provider: 1});
+taskSchema.index({amountPaid: 1});
+taskSchema.index({taskStatus: 1});
+taskSchema.index({service: 1});
+taskSchema.index({paymentStatus: 1});
 
 
 export default mongoose.model("Tasks", taskSchema);
