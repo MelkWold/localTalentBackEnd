@@ -1,3 +1,0 @@
-# Local Talent
-
-Local Talent Matcher a full stack website that matches local professionals and service providers with customers. Skilled service providers (e.g. tutors, electricians, accountants, plumbers, software engineers, web developers etc) with local clients (individuals, small businesses, mom-and-pop businesses, etc).
