@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import databaseConnection from "./db/connection.mjs"
-
+import globalErrorHandling from "./middleware/globalErrorHandling.mjs";
 
 // Set up
 const app = express();
@@ -15,7 +15,7 @@ databaseConnection()
 
 // Middleware
 app.use(express.json())
-// app.use(globalErrorHandling)
+app.use(globalErrorHandling)
 
 // Routes
 // app.use('api/users', usersRouter);
