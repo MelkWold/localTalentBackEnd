@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
+// import User from "./"
+
 
 const taskSchema = new mongoose.Schema({
     customerName: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: "User",
+        ref: "Users",
         required:true },
     amountPaid: { type: Number, required:true },
     service: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: "User",
+        ref: "Users",
         required:true}, // bring this from userSchema
     taskStatus: {
         type: String, 
