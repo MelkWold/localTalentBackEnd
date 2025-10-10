@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         zipcode: {type: String, required:true },
         country: {type: String, required:true },
     },
-    services: {type: [String], required:true},
+    services: {type: [String], required:true, validate: v => Array.isArray(v) && v.length > 0 },
     role: {
         type: String, 
         enum: ["Provider", "Customer"],
@@ -32,4 +32,4 @@ userSchema.index({
 });
 
 
-export default mongoose.model("Users", userSchema);
+export default mongoose.model("User", userSchema);
