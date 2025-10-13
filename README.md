@@ -30,3 +30,8 @@ The backend is build using the following tools, packages:
 |    GET    | /api/tasks/:id                   | Get a task by id                       |
 |    PUT    | /api/tasks/:id                   | Update a specific task by id           |
 |  DELETE   | /api/tasks/:id                   | Delete a specific task by id           |
+|    POST   | /api/transactions                | Create a new transaction               |
+|    GET    | /api/transactions                | Get all transactions in the database   |
+|    GET    | /api/transactions/:id            | Get a transaction by id                |
+|    PUT    | /api/transactions/:id            | Update a specific transaction by id    |
+|  DELETE   | /api/transactions/:id            | Delete a specific transaction by id    |
