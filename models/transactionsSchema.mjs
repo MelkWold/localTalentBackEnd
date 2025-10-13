@@ -29,6 +29,6 @@ const transactionsSchema = new mongoose.Schema(
 
 // Create indices
 transactionsSchema.index({ task: 1 });
-transactionsSchema.index({ status: 1 });
+transactionsSchema.index({ paymentStatus: 1 });
 
 export default mongoose.model("Transactions", transactionsSchema);

@@ -114,33 +114,37 @@ export const tasks = [
   },
 ];
 
-export const transactionsData = [
+export const transactions = [
   {
     task: "68ed5e21f4eb400449879c21",
     amount: 150,
     paymentMethod: "Credit Card",
-    status: "Completed",
+    paymentStatus: "Completed",
   },
   {
     task: "68ed5e21f4eb400449879c22",
     amount: 80,
     paymentMethod: "Credit Card",
-    status: "Completed",
+    paymentStatus: "Completed",
   },
-  { task: "68ed5e21f4eb400449879c23", amount: 120, paymentMethod: "Pay Pal", status: "Pending" },
+  { task: "68ed5e21f4eb400449879c23", amount: 120, paymentMethod: "PayPal", status: "Pending" },
   {
     task: "68ed5e21f4eb400449879c24",
     amount: 100,
     paymentMethod: "Credit Card",
-    status: "Completed",
+    paymentStatus: "Completed",
   },
   {
     task: "68ed5e21f4eb400449879c25",
     amount: 110,
     paymentMethod: "Credit Card",
-    status: "Pending",
+    paymentStatus: "Pending",
   },
-  { task: "68ed5e21f4eb400449879c26", amount: 90, paymentMethod: "Cash", status: "Completed" },
+  { 
+    task: "68ed5e21f4eb400449879c26", 
+    amount: 90, 
+    paymentMethod: "Cash", 
+    paymentStatus: "Completed" },
 ];
 
 export const reviews = [

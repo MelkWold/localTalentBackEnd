@@ -7,6 +7,7 @@ import taskRouter from "./routes/tasksRoute.mjs";
 import userRouter from "./routes/usersRoute.mjs";
 import reviewRouter from "./routes/reviewsRoute.mjs";
 import loggingMiddleware from "./middleware/loggingMiddleware.mjs";
+import transactionRouter from "./routes/transactionsRoute.mjs";
 
 // Set up
 const app = express();
@@ -25,6 +26,7 @@ app.use(loggingMiddleware)
 app.use('/api/users', userRouter);
 app.use('/api/tasks', taskRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/transactions", transactionRouter);
 // app.use('api/categories', categoriesRouter);
 
 
