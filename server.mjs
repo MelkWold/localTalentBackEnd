@@ -6,6 +6,7 @@ import globalErrorHandling from "./middleware/globalErrorHandling.mjs";
 import taskRouter from "./routes/tasksRoute.mjs";
 import userRouter from "./routes/usersRoute.mjs";
 import reviewRouter from "./routes/reviewsRoute.mjs";
+import loggingMiddleware from "./middleware/loggingMiddleware.mjs";
 
 // Set up
 const app = express();
@@ -18,13 +19,14 @@ databaseConnection();
 // Middleware
 app.use(express.json());
 app.use(globalErrorHandling);
+app.use(loggingMiddleware)
 
 // Routes
+app.use('/api/users', userRouter);
+app.use('/api/tasks', taskRouter);
 app.use("/api/reviews", reviewRouter);
 // app.use('api/categories', categoriesRouter);
-// app.use('api/tasks', tasksRouter);
-// app.use('api/tasks', tasksRouter);
-// app.use('/', taskRouter)
+
 
 // Listen to server
 
