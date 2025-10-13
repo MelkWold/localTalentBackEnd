@@ -1,36 +1,40 @@
 import mongoose from "mongoose";
-import Tasks from "./taskSchema.mjs";
 import Users from "./usersSchema.mjs";
 
-const reviewsSchema = new mongoose.Schema({
- 
-    task: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Tasks",
-        required:true}, 
+const reviewsSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
     rating: {
-        type: Number,
-        min:1,
-        max:5,
-        required:true
+      type: Number,
+      min: 1,
+      max: 5,
+      required: true,
     },
     comment: {
-        type: String,
-        maxlength: 500,
+      type: String,
+      maxlength: 500,
     },
-    reviewer: { 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Users", 
-        required:true }, 
-    reviewee: { type: mongoose.Schema.Types.ObjectId,
-        ref: "Users", 
-        required:true } 
-}, { timestamps: true });
-
+    reviewer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    reviewee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 // Create indices
-reviewsSchema.index({task: 1});
-reviewsSchema.index({reviewer: 1});
-reviewsSchema.index({reviewee: 1});
+reviewsSchema.index({ task: 1 });
+reviewsSchema.index({ reviewer: 1 });
+reviewsSchema.index({ reviewee: 1 });
 
 export default mongoose.model("Reviews", reviewsSchema);
