@@ -43,4 +43,4 @@ userSchema.index({
   "userAddress.country": 1,
 });
 
-export default mongoose.model("users", userSchema);
+export default mongoose.model("Users", userSchema);

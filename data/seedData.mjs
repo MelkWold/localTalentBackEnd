@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
+
 export const users = [
   {
-    taskName: "John Doe",
+    userName: "John Doe",
     email: "john@example.com",
     password: "johnIsFine@123",
     phone: "+1-123-456-7890",
@@ -15,7 +17,7 @@ export const users = [
     role: "Provider",
   },
   {
-    taskName: "Sarah Johnson",
+    userName: "Sarah Johnson",
     email: "sarah@example.com",
     password: "sarahIsGood@123",
     phone: "+1-234-567-890",
@@ -31,7 +33,7 @@ export const users = [
   },
 
   {
-    taskName: "Devon Jones",
+    userName: "Devon Jones",
     email: "devon@example.com",
     password: "devonIsFine@123",
     phone: "+1-345-456-7890",
@@ -47,7 +49,7 @@ export const users = [
   },
 
   {
-    taskName: "Anna Lee",
+    userName: "Anna Lee",
     email: "Anna@example.com",
     password: "anaIsGreat@123",
     phone: "+1-789-456-7890",
@@ -155,3 +157,17 @@ export const reviews = [
   { user: "68ed51492a2666039c25050c", reviewer: "68ed51492a2666039c25050e", reviewee: "68ed51492a2666039c25050c", task: "68ed5e21f4eb400449879c25", rating: 1, comment: "Not a good experience; I do not recommend!"},
   { user: "68ed51492a2666039c25050e", reviewer: "68ed51492a2666039c25050c", reviewee: "68ed51492a2666039c25050e", task: "68ed5e21f4eb400449879c26", rating: 4, comment: "Great job!" },
 ];
+
+export const messages = [
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050c"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050b"), messageText: "Hi. Would you be able to help me with plumbing today?", isRead: true},
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050b"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050c"), messageText: "Yes, I can help you today", isRead: true},
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050c"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050b"), messageText: "Perfect. Please book for 1 hour today", isRead: true},
+
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050e"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050d"), messageText: "Hey. can you provide a quote for garn lawn?", isRead: true},
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050d"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050e"), messageText: "Sure! Could you share the size of your lawn?", isRead: true},
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050e"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050d"), messageText: "It's about 800 sq ft. I will send photos.", isRead: false},
+
+  { sender: new mongoose.Types.ObjectId("68ed51492a2666039c25050b"), receiver: new mongoose.Types.ObjectId("68ee577079c5ff899c8fe852"), messageText: "Hello! Just confirming our appointment today.", isRead: true},
+  { sender: new mongoose.Types.ObjectId("68ee577079c5ff899c8fe852"), receiver: new mongoose.Types.ObjectId("68ed51492a2666039c25050b"), messageText: "Yes,confirmed. Thank you!", isRead: true},
+  
+]
