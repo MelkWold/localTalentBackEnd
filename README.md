@@ -35,3 +35,8 @@ The backend is build using the following tools, packages:
 |    GET    | /api/transactions/:id            | Get a transaction by id                |
 |    PUT    | /api/transactions/:id            | Update a specific transaction by id    |
 |  DELETE   | /api/transactions/:id            | Delete a specific transaction by id    |
+|    POST   | /api/messages                    | Create a new message                   |
+|    GET    | /api/messages                    | Get all messages in the database       |
+|    GET    | /api/messages/:id                | Get a transaction by id                |
+|    PUT    | /api/messages/:id                | Update a specific transaction by id    |
+|  DELETE   | /api/messages/:id                | Delete a specific transaction by id    |
