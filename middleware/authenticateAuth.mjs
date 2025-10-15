@@ -13,7 +13,7 @@ export default function (req, res, next) {
 
     // If there is token, verify it using the secret key (process.env.jwtSecret)
     try {
-        const decoded = jwt.verify(token, process.env.jwtSecret);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // add user information from the token payload to the req object
         req.user = decoded.user; 
 

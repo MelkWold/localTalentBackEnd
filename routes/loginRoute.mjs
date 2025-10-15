@@ -12,7 +12,7 @@ dotenv.config();
 // Set up/ Create a new express router instance
 const loginRouter = express.Router();
 
-// Define post route for registration
+// Define post route for login
 loginRouter.route('/')
     .get((req, res) => {
         res.send("Auth Test");
@@ -21,7 +21,7 @@ loginRouter.route('/')
     .post(
        [ 
         check('email', "Please provide valid email").isEmail(),
-        check('password', "Please enter a password with 8 or more characters").isLength({ min: 8 }),
+        check('password', "Please must be at least 8 characters").isLength({ min: 8 }),
        ],
 
        // Route Handler
@@ -39,7 +39,7 @@ loginRouter.route('/')
 
         // check if user with the same email exists in the database
         try {
-            let user = await User.findOne({ email });
+            let user = await User.findOne({ email }).select('+password');
             // send error message if user exists
             if(!user) {
                 return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }]})
@@ -47,27 +47,17 @@ loginRouter.route('/')
 
             // Check whether the given password match the one saved in db
             const passwordMatch = await bcrypt.compare(password, user.password);
-
+            
             // Return error message if passwords do not match
             if(!passwordMatch){
                 return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }]})
             }
 
             // Create JWT Payload
-            const payload = {
-              user: { id: user._id }
-             }
-        // Sign JWT Token
-        jwt.sign(
-            payload, // user data to encode
-            process.env.jwtSecret, // secret key from .env
-            { expiresIn: "36000s" }, 
-            (err, token) => {
-                if(err) throw err;
-                res.status(201).json({ token })
-            }
-            );
-
+            const payload = { user: { id: user._id } };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"36000s" });
+            return res.status(200).json({ token });
+            
         } catch (err) {
             console.error(err.message);
             res.status(500).json({ errors: [{ msg: "Server Error" }]})

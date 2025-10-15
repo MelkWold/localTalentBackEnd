@@ -11,29 +11,36 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     password: { type: String, required: true, select: false },
-    phone: { type: String, required: true, trim: true },
+    phone: { type: String, required: false, trim: true },
     userAddress: {
-      city: { type: String, required: true, trim: true },
+      city: { type: String, required: false, trim: true },
       county: { type: String, required: false, trim: true },
-      state: { type: String, required: true, trim: true },
-      zipcode: { type: String, required: true, trim: true },
-      country: { type: String, required: true, trim: true },
+      state: { type: String, required: false, trim: true },
+      zipcode: { type: String, required: false, trim: true },
+      country: { type: String, required: false, trim: true },
     },
     services: {
       type: [String],
-      required: true,
-      validate: (v) => Array.isArray(v) && v.length > 0,
-    },
+      required: false,
+      validate: {
+        validator: (v) => {
+        if(v === undefined || v === null || v.length === 0) return true; // i.e. if the above conditions are true, just validate as true
+          return Array.isArray(v);
+      },
+      message: "Services must be a non-empty array of strings if provided" 
+      }, },
+
     role: {
       type: String,
       enum: ["Provider", "Customer"],
       required: true,
-    },
-  },
-  { timestamps: true }
+    }, 
+    
+  },  { timestamps: true }
 );
 
 // Create indices for fast quering
+userSchema.index({ email: 1 });
 userSchema.index({ services: 1 });
 userSchema.index({ phone: 1 });
 userSchema.index({ role: 1 });

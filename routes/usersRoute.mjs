@@ -25,20 +25,21 @@ const userRouter = express.Router();
 // ================================ Create a new user =======================================
 userRouter
   .route("/")
-  .post(async (req, res) => {
-    try {
-      let newUser = await Users.create(req.body);
-      res.status(201).json(newUser);
-    } catch (err) {
-      res.status(400).json({ msg: err.message });
-    }
-  })
+  // Because we have a dedicated registerRoute, we do not need this anymore
+  // .post(async (req, res) => {
+  //   try {
+  //     let newUser = await Users.create(req.body);
+  //     res.status(201).json(newUser);
+  //   } catch (err) {
+  //     res.status(400).json({ msg: err.message });
+  //   }
+  // })
 
   // Get all users
   .get(async (req, res) => {
     try {
       let allUsers = await Users.find({});
-      res.json(allUsers);
+      res.status(200).json(allUsers);
     } catch (err) {
       res.status(400).json({ msg: err.message });
     }
@@ -53,11 +54,11 @@ userRouter
     try {
       let user = await Users.findOne({ _id: req.params.id });
       if (!user) {
-        return res.status(404).json({ msg: "user not found" });
+        return res.status(400).json({ msg: "user not found" });
       }
       return res.json(user);
     } catch (err) {
-      res.status(400).json({ msg: err.message });
+      res.status(500).json({ msg: err.message });
     }
   })
 
@@ -70,11 +71,11 @@ userRouter
         { new: true }
       );
       if (!updatedUser) {
-        return res.status(404).json({ msg: "user not found" });
+        return res.status(400).json({ msg: "user not found" });
       }
       return res.json(updatedUser);
     } catch (err) {
-      res.status(400).json({ msg: err.message });
+      res.status(500).json({ msg: err.message });
     }
   })
 
@@ -85,7 +86,7 @@ userRouter
       if (!deletedUser) {
         return res.status(404).json({ msg: "user not found" });
       }
-      return res.json({ msg: "user successfully deleted." });
+      return res.status(200).json({ msg: "user successfully deleted." });
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

@@ -11,15 +11,21 @@ The backend is build using the following tools, packages:
 - dotenv
 - Mongoose
 - MongoDB
+- express-validator
+- jsonwebtoken
+- bcrypt
 
 ## API EndPoints
 |   Method  |          Endpoint                |    Description                         |
 |-----------|----------------------------------|----------------------------------------|
-|    POST   | /api/users                       | Create a new user                      |
+|    POST   | /api/auth/register               | Register new user and return JWT Token |
+|    POST   | /api/auth/login                  | Authenticate user and retern JWT Token |
+|    GET    | /api/auth/users                  | Get currently authenticated user       |
 |    GET    | /api/users                       | Get all users in the database          |
 |    GET    | /api/users/:id                   | Get a user by id                       |
 |    PUT    | /api/users/:id                   | Update a specific user by id           |
 |  DELETE   | /api/users/:id                   | Delete a specific user by id           |
+|   POST    | /api/auth                        | Authenticate and get a token           |
 |    POST   | /api/reviews                     | Create a new review                    |
 |    GET    | /api/reviews                     | Get all reviews in the database        |
 |    GET    | /api/reviews/:id                 | Get a review by id                     |
@@ -40,3 +46,30 @@ The backend is build using the following tools, packages:
 |    GET    | /api/messages/:id                | Get a transaction by id                |
 |    PUT    | /api/messages/:id                | Update a specific transaction by id    |
 |  DELETE   | /api/messages/:id                | Delete a specific transaction by id    |
+|    POST   | /api/messages                    | Create a new message                   |
+|    GET    | /api/messages                    | Get all messages in the database       |
+|    GET    | /api/messages/:id                | Get a transaction by id                |
+|    PUT    | /api/messages/:id                | Update a specific transaction by id    |
+|  DELETE   | /api/messages/:id                | Delete a specific transaction by id    |
+
+
+
+====================ONLY FOR TESTING ================================
+DELETE BEFORE SUBMITING
+This is a temporary username and password for testing! 
+TEST REGISTER a new user: POST /api/auth/register
+{ 
+  "userName": "Melkamu Woldemariam",
+  "email": "melk@melk.com",
+  "password": "BestPassword@2025",
+  "role":"Provider"
+}
+
+TEST LOGIN an existing user: POST /api/auth/login
+
+{ 
+  "email": "melk@melk.com",
+  "password": "BestPassword@2025"
+}
+
+======================================================================

@@ -20,7 +20,7 @@ registerRouter
         check('userName', "Name is required").not().isEmpty(),
         check('email', "Please provide valid email").isEmail(),
         check('password', "Please enter a password with 8 or more characters").isLength({ min: 8 }),
-        check('role', "Please choose your role").not().isEmpty(),
+        check('role', "Role is required").not().isEmpty(),
        ],
        // Route Handler
        async(req, res) => {
@@ -50,31 +50,22 @@ registerRouter
 
             // Hash Password (generate a random salt after 10 rounds)
             const salt = await bcrypt.genSalt(10);
+
             // Replace plain-text password with the secure hash
-            user.password = await bcrypt.hash(user.password, salt);
+            user.password = await bcrypt.hash(password, salt);
+
             // Save user in db
             await user.save();
 
             // Create JWT Payload
-            const payload = {
-              user: { id: user._id }
-             }
-        // Sign JWT Token
-        jwt.sign(
-            payload, // user data to encode
-            process.env.jwtSecret, // secret key from .env
-            { expiresIn: "36000s" }, 
-            (err, token) => {
-                if(err) throw err;
-                res.status(201).json({ token })
-            }
-            );
-
+            const payload = { user: { id: user._id } };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"36000s" });
+            return res.status(201).json({ token });
+            
         } catch (err) {
             console.error(err.message);
             res.status(500).json({ errors: [{ msg: "Server Error" }]})
         }
-    }
-    );
+    });
 
 export default registerRouter;

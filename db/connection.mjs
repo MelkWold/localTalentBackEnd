@@ -8,12 +8,17 @@ dotenv.config();
 // Get the connection string from env
 const connectionString = process.env.mongoURL || "";
 
+// Check if the env variable isn't missing
+if (!connectionString) {
+    console.error("MongoDB Connection string missing in .env file");
+    process.exit(1); 
+}
 
-// Set up the MondoDB connection
+// Set up the MongoDB connection
 
 async function databaseConnection() {
 
-    try{
+    try {
         await mongoose.connect(connectionString);
         console.log("MongoDB successfully connected ...")
     } catch(err){
