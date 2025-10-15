@@ -1,4 +1,7 @@
-# Local Talent
+# Local Talent Backend
+
+## Frontend GitHub Repository: https://github.com/MelkWold/localTalentFrontend
+
 ## Project Description and Features
 Local Talent Matcher is a full stack website that matches local professionals and service providers (E.g. tutors, electricians, accountants, plumbers, software engineers, web developers etc) with local clients (individuals, small businesses, mom-and-pop businesses, etc). Customers will be able to search for talented individuals based on services, hire them for a task and pay them using standard payment processing methods. After the completion of the task, both providers and customers will be able to rate each other and write reviews about their experiences. 
 
