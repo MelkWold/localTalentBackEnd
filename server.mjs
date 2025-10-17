@@ -38,7 +38,7 @@ app.use("/api/transactions", transactionRouter);
 app.use("/api/messages", messageRouter);
 
 // Auth routes
-app.use("/api/auth/login", loginRoute);
+app.use("/api/auth/signin", loginRoute);
 app.use("/api/auth/register", registerRoute);
 // app.use('api/categories', categoriesRouter);
 
