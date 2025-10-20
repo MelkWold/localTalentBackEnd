@@ -55,7 +55,7 @@ userRouter
     }
     res.json(user);
   } catch(err){
-    console.error(error.message);
+    console.error(err.message);
     res.status(500).json({ msg: "Server Error" });
   }
 });

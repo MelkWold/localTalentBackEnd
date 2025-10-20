@@ -42,27 +42,28 @@ loginRouter.route('/')
             let user = await User.findOne({ email }).select('+password');
 
             //======== Debugging steps ===================
-            console.log("Login attempt for email:", email);
-            console.log("User found in DB:", !!user)
+            // console.log("Login attempt for email:", email);
+            // console.log("User found in DB:", !!user)
 
             // send error message if user doesn't exist
             if(!user) {
                 //======== Debugging steps ===================
-                console.log("Login failed: No user found with this email");
+                // console.log("Login failed: No user found with this email");
 
                 return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }]})
             }
                 
-
             // Check whether the given password match the one saved in db
             const passwordMatch = await bcrypt.compare(password, user.password);
+            
             //======== Debugging steps ===================
-            console.log("Password comparison result", passwordMatch);
+            // console.log("Password comparison result", passwordMatch);
 
             // Return error message if passwords do not match
             if(!passwordMatch){
+                
                 //======== Debugging steps ===================
-                console.log("Login failed: passwords do not match");
+                // console.log("Login failed: passwords do not match");
 
                 return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }]})
             }

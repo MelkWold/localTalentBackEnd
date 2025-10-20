@@ -42,19 +42,19 @@ registerRouter
 
         // check if user with the same email exists in the database
         try {
-            let user = await User.findOne({ email });
+            let existingUser = await User.findOne({ email });
             // send error message if user exists
-            if(user) {
+            if(existingUser) {
                 return res.status(400).json({ errors: [{ msg: "User already exists" }]})
             }
-            // If user email is not in db, register user as new User
-            user = new User ({
-                userName,
-                email,
-                password,
-                role,
-                services: role === "Provider" && services ? services : []
-            });
+
+            // Create the user object using the  request body
+            const userData = { ...req.body }
+            // Handle services based on type of user
+            userData.services = req.body.role === "Provider" && Array.isArray(req.body.services) ? req.body.services : [];
+
+            // If user email is not in db, register user as new User using userData
+             let user = new User (userData);
 
             // Hash Password (generate a random salt after 10 rounds)
             const salt = await bcrypt.genSalt(10);
@@ -68,17 +68,13 @@ registerRouter
             // Create JWT Payload
             const payload = { user: { id: user._id } };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"36000s" });
+            
+            // Return token and user info excluding password hash
+            // To remove passoword before sending,
+            const { password: pwd, ...userWithoutPassoword } =user.toObject();
             return res.status(201).json({
                 token,
-                user: {
-                    id: user._id,
-                    userName: user.userName,
-                    email: user.email,
-                    role:user.role,
-                    phone: user.phone,
-                    userAddress: user.userAddress,
-                    services:user.services
-                },
+                user: userWithoutPassoword,
             });
             
         } catch (err) {
