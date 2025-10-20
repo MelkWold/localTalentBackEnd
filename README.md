@@ -69,7 +69,8 @@ TEST REGISTER a new user: POST /api/auth/register
   "userName": "Melkamu Woldemariam",
   "email": "melk@melk.com",
   "password": "BestPassword@2025",
-  "role":"Provider"
+  "role":"Provider",
+  "services": ["Reading"]
 }
 
 TEST LOGIN an existing user: POST /api/auth/login

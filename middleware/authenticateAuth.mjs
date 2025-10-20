@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 // Load environment variables from .env into process.env
 dotenv.config();
 
-export default function (req, res, next) {
+export default function auth (req, res, next) {
     // Extract token from the custom HTTP header (x-auth-token)
     const token = req.header('x-auth-token');
 

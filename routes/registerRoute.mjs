@@ -21,6 +21,13 @@ registerRouter
         check('email', "Please provide valid email").isEmail(),
         check('password', "Please enter a password with 8 or more characters").isLength({ min: 8 }),
         check('role', "Role is required").not().isEmpty(),
+        check('services', "Providers must provide at least one service").custom((value, { req }) => {
+            if (req.body.role === "Provider") {
+                return Array.isArray(value) && value.length > 0;
+            }
+            return true;
+        })
+        
        ],
        // Route Handler
        async(req, res) => {
@@ -31,7 +38,7 @@ registerRouter
             return res.status(400).json({ errors: errors.array() });
         }
         //Destructure the validated user input from the request body
-        const { userName, email, password, role } = req.body;
+        const { userName, email, password, role, services } = req.body;
 
         // check if user with the same email exists in the database
         try {
@@ -45,7 +52,8 @@ registerRouter
                 userName,
                 email,
                 password,
-                role
+                role,
+                services: role === "Provider" && services ? services : []
             });
 
             // Hash Password (generate a random salt after 10 rounds)
@@ -60,7 +68,18 @@ registerRouter
             // Create JWT Payload
             const payload = { user: { id: user._id } };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"36000s" });
-            return res.status(201).json({ token });
+            return res.status(201).json({
+                token,
+                user: {
+                    id: user._id,
+                    userName: user.userName,
+                    email: user.email,
+                    role:user.role,
+                    phone: user.phone,
+                    userAddress: user.userAddress,
+                    services:user.services
+                },
+            });
             
         } catch (err) {
             console.error(err.message);

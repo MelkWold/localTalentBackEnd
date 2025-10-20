@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const usersSchema = new mongoose.Schema(
   {
     userName: { type: String, required: true },
     email: {
@@ -40,14 +40,14 @@ const userSchema = new mongoose.Schema(
 );
 
 // Create indices for fast quering
-userSchema.index({ email: 1 });
-userSchema.index({ services: 1 });
-userSchema.index({ phone: 1 });
-userSchema.index({ role: 1 });
-userSchema.index({
+usersSchema.index({ email: 1 });
+usersSchema.index({ services: 1 });
+usersSchema.index({ phone: 1 });
+usersSchema.index({ role: 1 });
+usersSchema.index({
   "userAddress.city": 1,
   "userAddress.state": 1,
   "userAddress.country": 1,
 });
 
-export default mongoose.model("Users", userSchema);
+export default mongoose.model("Users", usersSchema);

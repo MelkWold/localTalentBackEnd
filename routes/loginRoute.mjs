@@ -40,26 +40,53 @@ loginRouter.route('/')
         // check if user with the same email exists in the database
         try {
             let user = await User.findOne({ email }).select('+password');
-            // send error message if user exists
+
+            //======== Debugging steps ===================
+            console.log("Login attempt for email:", email);
+            console.log("User found in DB:", !!user)
+
+            // send error message if user doesn't exist
             if(!user) {
+                //======== Debugging steps ===================
+                console.log("Login failed: No user found with this email");
+
                 return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }]})
             }
+                
 
             // Check whether the given password match the one saved in db
             const passwordMatch = await bcrypt.compare(password, user.password);
-            
+            //======== Debugging steps ===================
+            console.log("Password comparison result", passwordMatch);
+
             // Return error message if passwords do not match
             if(!passwordMatch){
+                //======== Debugging steps ===================
+                console.log("Login failed: passwords do not match");
+
                 return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }]})
             }
 
             // Create JWT Payload
             const payload = { user: { id: user._id } };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn:"36000s" });
-            return res.status(200).json({ token });
+
+            // Return token and user info
+            return res.status(200).json({ 
+                token,
+                user: {
+                id: user._id,
+                userName: user.userName,
+                email:user.email,
+                role:user.role,
+                phone:user.phone,
+                userAddress:user.userAddress,
+                services:user.services
+            },
+        });
             
         } catch (err) {
-            console.error(err.message);
+            console.error("Server error during login:", err.message);
             res.status(500).json({ errors: [{ msg: "Server Error" }]})
         }
     }

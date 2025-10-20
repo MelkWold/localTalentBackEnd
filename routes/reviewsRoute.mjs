@@ -44,6 +44,22 @@ reviewRouter
     }
   });
 
+
+  // GET all reviews for a specific user (reviewee)
+reviewRouter
+.route("/user/:id")
+.get(async(req, res) => {
+  try {
+    const reviews = await Reviews.find({ reviewee: req.params.id})
+    //populate reviewer userName
+    .populate("reviewer", "userName"); 
+    res.json(reviews);
+  } catch(err){
+    res.status(400).json({ msg: err.message });
+  }
+});
+
+
 // ================================ GET, UPDATE, DELETE by task id ===========================
 reviewRouter
   .route("/:id")

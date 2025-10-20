@@ -3,11 +3,6 @@ import Users from "./usersSchema.mjs";
 
 const reviewsSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-      required: true,
-    },
     rating: {
       type: Number,
       min: 1,
@@ -20,12 +15,12 @@ const reviewsSchema = new mongoose.Schema(
     },
     reviewer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "Users",
       required: true,
     },
     reviewee: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "Users",
       required: true,
     },
   },
@@ -33,7 +28,6 @@ const reviewsSchema = new mongoose.Schema(
 );
 
 // Create indices
-reviewsSchema.index({ task: 1 });
 reviewsSchema.index({ reviewer: 1 });
 reviewsSchema.index({ reviewee: 1 });
 

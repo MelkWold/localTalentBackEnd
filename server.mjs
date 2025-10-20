@@ -16,7 +16,7 @@ import loginRoute from "./routes/loginRoute.mjs";
 // Set up
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 // Database connection
 databaseConnection();
@@ -40,7 +40,6 @@ app.use("/api/messages", messageRouter);
 // Auth routes
 app.use("/api/auth/signin", loginRoute);
 app.use("/api/auth/register", registerRoute);
-// app.use('api/categories', categoriesRouter);
 
 
 // Global Error Handling

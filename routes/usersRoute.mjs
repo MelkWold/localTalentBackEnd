@@ -1,6 +1,6 @@
 import express from "express";
 import Users from "../models/usersSchema.mjs";
-
+import auth from '../middleware/authenticateAuth.mjs';
 
 // Set up
 const userRouter = express.Router();
@@ -25,9 +25,9 @@ const userRouter = express.Router();
 // ================================ Create a new user =======================================
 userRouter
   .route("/")
-  // Because we have a dedicated registerRoute, we do not need this anymore
+  // Because we have a dedicated registerRoute, we do not need this anymore; if we have this, it over-rides the frontend vefication based on jwt
   // .post(async (req, res) => {
-  //   try {
+  //   try { 
   //     let newUser = await Users.create(req.body);
   //     res.status(201).json(newUser);
   //   } catch (err) {
@@ -44,6 +44,21 @@ userRouter
       res.status(400).json({ msg: err.message });
     }
   });
+
+  // ================ GET Authenticated User (Self) =================
+userRouter
+.get("/me", auth, async(req, res) => {
+  try {
+    const user = await Users.findById(req.user.id).select("-password");
+    if(!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json(user);
+  } catch(err){
+    console.error(error.message);
+    res.status(500).json({ msg: "Server Error" });
+  }
+});
 
 // ================================ GET, UPDATE, DELETE by user id ===========================
 userRouter
