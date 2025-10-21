@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Users from "./usersSchema.mjs";
 
 const reviewsSchema = new mongoose.Schema(
   {

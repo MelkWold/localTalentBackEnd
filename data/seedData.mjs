@@ -6,7 +6,7 @@ export const users = [
     email: "john@example.com",
     password: "johnIsFine@123",
     phone: "+1-123-456-7890",
-    taskAddress: {
+    userAddress: {
       city: "Austin",
       county: "Travis",
       state: "Texas",
@@ -21,7 +21,7 @@ export const users = [
     email: "sarah@example.com",
     password: "sarahIsGood@123",
     phone: "+1-234-567-890",
-    taskAddress: {
+    userAddress: {
       city: "Denver",
       county: "Denver",
       state: "Colorado",
@@ -37,7 +37,7 @@ export const users = [
     email: "devon@example.com",
     password: "devonIsFine@123",
     phone: "+1-345-456-7890",
-    taskAddress: {
+    userAddress: {
       city: "Seattle",
       county: "King",
       state: "Washington",
@@ -53,7 +53,7 @@ export const users = [
     email: "Anna@example.com",
     password: "anaIsGreat@123",
     phone: "+1-789-456-7890",
-    taskAddress: {
+    userAddress: {
       city: "Miami",
       county: "Miami-Dade",
       state: "Florida",

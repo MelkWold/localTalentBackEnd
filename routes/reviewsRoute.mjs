@@ -1,6 +1,6 @@
 import express from "express";
 import Reviews from "../models/reviewsSchema.mjs";
-
+import auth from "../middleware/authenticateAuth.mjs"
 
 // Set up
 const reviewRouter = express.Router();
@@ -22,7 +22,7 @@ const reviewRouter = express.Router();
 //     }
 // })
 
-// ================================ Create a new task =======================================
+// ================================ Create a new review =======================================
 reviewRouter
   .route("/")
   .post(async (req, res) => {
@@ -43,7 +43,17 @@ reviewRouter
       res.status(400).json({ msg: err.message });
     }
   });
-
+// ============= GET reviews by the logged-in user's ID ================
+reviewRouter.get("/myreviews", auth, async (req,res) => {
+  try {
+    const reviews = await Reviews.find({ 
+      $or: [{ reviewer: req.user.id }, { reviewee: req.user.id }],
+     }).populate("customer provider", "userName email");
+    res.json(reviews);
+  } catch(err){
+    res.status(500).json({ msg: err.message})
+  }
+});
 
   // GET all reviews for a specific user (reviewee)
 reviewRouter
@@ -60,14 +70,14 @@ reviewRouter
 });
 
 
-// ================================ GET, UPDATE, DELETE by task id ===========================
+// ================================ GET, UPDATE, DELETE by id ===========================
 reviewRouter
   .route("/:id")
 
   // GET a specific task
   .get(async (req, res) => {
     try {
-      let review = await Reviews.findOne({ _id: req.params.id });
+      let review = await Reviews.findById(req.params.id);
       if (!review) {
         return res.status(404).json({ msg: "Review not found" });
       }
@@ -78,7 +88,7 @@ reviewRouter
   })
 
   // UPDATE a specific task's info
-  .put(async (req, res) => {
+  .put(auth, async (req, res) => {
     try {
       let updatedReview = await Reviews.findOneAndUpdate(
         { _id: req.params.id },
@@ -95,9 +105,9 @@ reviewRouter
   })
 
   // DELETE a specific task
-  .delete(async (req, res) => {
+  .delete(auth, async (req, res) => {
     try {
-      let deletedReview = await Reviews.findOneAndDelete({ _id: req.params.id });
+      let deletedReview = await Reviews.findByIdAndDelete(req.params.id);
       if (!deletedReview) {
         return res.status(404).json({ msg: "Review not found" });
       }

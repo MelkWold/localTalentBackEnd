@@ -78,7 +78,7 @@ userRouter
   })
 
   // UPDATE a specific user's info
-  .put(async (req, res) => {
+  .put(auth, async (req, res) => {
     try {
       let updatedUser = await Users.findOneAndUpdate(
         { _id: req.params.id },
@@ -95,7 +95,7 @@ userRouter
   })
 
   // DELETE a specific user
-  .delete(async (req, res) => {
+  .delete(auth, async (req, res) => {
     try {
       let deletedUser = await Users.findOneAndDelete({ _id: req.params.id });
       if (!deletedUser) {

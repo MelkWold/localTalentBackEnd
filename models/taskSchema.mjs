@@ -4,12 +4,12 @@ const taskSchema = new mongoose.Schema(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "Users",
       required: true,
     },
     provider: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "Users",
       required: true,
     },
     amountPaid: { type: Number, required: true, min: 0 },

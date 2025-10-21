@@ -1,6 +1,6 @@
 import express from "express";
 import Tasks from "../models/taskSchema.mjs";
-
+import auth from "../middleware/authenticateAuth.mjs";
 
 // Set up
 const taskRouter = express.Router();
@@ -22,10 +22,10 @@ const taskRouter = express.Router();
 //     }
 // })
 
-// ================================ Create a new task =======================================
+// ================================ Create and get all tasks =======================================
 taskRouter
   .route("/")
-  .post(async (req, res) => {
+  .post(auth, async (req, res) => {
     try {
       let newTask = await Tasks.create(req.body);
       res.status(201).json(newTask);
@@ -44,6 +44,18 @@ taskRouter
     }
   });
 
+// ============= GET tasks by the logged-in user's ID ================
+taskRouter
+.get("/mytasks", auth, async (req,res) => {
+  try{
+    const tasks = await Tasks.find({ 
+      $or: [{ customer: req.user.id }, { provider: req.user.id }], }).populate("customer provider", "userName email");
+    res.json(tasks);
+  } catch(err){
+    res.status(500).json({ msg: err.message})
+  }
+});
+
 // ================================ GET, UPDATE, DELETE by task id ===========================
 taskRouter
   .route("/:id")
@@ -51,7 +63,7 @@ taskRouter
   // GET a specific task
   .get(async (req, res) => {
     try {
-      let task = await Tasks.findOne({ _id: req.params.id });
+      let task = await Tasks.findById(req.params.id);
       if (!task) {
         return res.status(404).json({ msg: "task not found" });
       }
@@ -62,12 +74,9 @@ taskRouter
   })
 
   // UPDATE a specific task's info
-  .put(async (req, res) => {
+  .put(auth, async (req, res) => {
     try {
-      let updatedTask = await Tasks.findOneAndUpdate(
-        { _id: req.params.id },
-        req.body,
-        { new: true }
+      let updatedTask = await Tasks.findByIdAndUpdate(req.params.id, req.body, { new: true }
       );
       if (!updatedTask) {
         return res.status(404).json({ msg: "task not found" });
@@ -79,9 +88,9 @@ taskRouter
   })
 
   // DELETE a specific task
-  .delete(async (req, res) => {
+  .delete(auth, async (req, res) => {
     try {
-      let deletedTask = await Tasks.findOneAndDelete({ _id: req.params.id });
+      let deletedTask = await Tasks.findByIdAndDelete(req.params.id);
       if (!deletedTask) {
         return res.status(404).json({ msg: "task not found" });
       }
@@ -90,5 +99,7 @@ taskRouter
       res.status(500).json({ msg: err.message });
     }
   });
+
+
 
 export default taskRouter;
