@@ -47,8 +47,9 @@ reviewRouter
 reviewRouter.get("/myreviews", auth, async (req,res) => {
   try {
     const reviews = await Reviews.find({ 
+      // match reviews where the logged-in user is either the reviewer or the reviewee
       $or: [{ reviewer: req.user.id }, { reviewee: req.user.id }],
-     }).populate("customer provider", "userName email");
+     }).populate("reviewer reviewee", "userName email");
     res.json(reviews);
   } catch(err){
     res.status(500).json({ msg: err.message})
