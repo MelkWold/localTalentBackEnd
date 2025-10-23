@@ -18,6 +18,19 @@ The backend is build using the following tools, packages:
 - jsonwebtoken
 - bcrypt
 
+## Middleware
+- authenticateAuth - for authenticating users
+- globalErrorHandling - for handling global errors
+- loggingMiddleware - to log server requests
+- adminAuth- to authenticate admin (not fully implemented yet.)
+
+## Schema
+1. usersSchema- to generate the Users model and validate user creation
+2. reviewsSchema - to generate the Reviews model and validate review creation
+3. taskSchema - to generate the Tasks model and validate task creation
+4. transactionsSchema - to generate the Transactions model and validate transaction creation
+5. messagesSchema - to generate the Messages model and validate message creation
+
 ## API EndPoints
 The following API Endpoints allow CRUD operations on the project. 
 Note: Even though all the endpoints are tested and working, some of them are not yet integrated into the frontend because of time. Future developments are planned to fully integrate all the APIs and create additional ones that may be needed.  
@@ -25,7 +38,7 @@ Note: Even though all the endpoints are tested and working, some of them are not
 |-----------|----------------------------------|----------------------------------------|
 |    POST   | /api/auth/register               | Register new user and return JWT Token |
 |    POST   | /api/auth/login                  | Authenticate user and retern JWT Token |
-|    GET    | /api/auth/users                  | Get currently authenticated user       |
+|    GET    | /api/users/me                    | Get currently authenticated user       |
 |    GET    | /api/users                       | Get all users in the database          |
 |    GET    | /api/users/:id                   | Get a user by id                       |
 |    PUT    | /api/users/:id                   | Update a specific user by id           |
@@ -34,11 +47,13 @@ Note: Even though all the endpoints are tested and working, some of them are not
 |    POST   | /api/reviews                     | Create a new review                    |
 |    GET    | /api/reviews                     | Get all reviews in the database        |
 |    GET    | /api/reviews/:id                 | Get a review by id                     |
+|    GET    | /api/reviews/myreviews           | Get reviews for the authenticated user |
 |    PUT    | /api/reviews/:id                 | Update a specific review by id         |
 |  DELETE   | /api/reviews/:id                 | Delete a specific review by id         |
 |    POST   | /api/tasks                       | Create a new task                      |
 |    GET    | /api/tasks                       | Get all tasks in the database          |
 |    GET    | /api/tasks/:id                   | Get a task by id                       |
+|    GET    | /api/tasks/mytasks               | Get tasks for the authenticated user   |
 |    PUT    | /api/tasks/:id                   | Update a specific task by id           |
 |  DELETE   | /api/tasks/:id                   | Delete a specific task by id           |
 |    POST   | /api/transactions                | Create a new transaction               |
