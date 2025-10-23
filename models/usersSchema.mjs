@@ -40,7 +40,6 @@ const usersSchema = new mongoose.Schema(
 );
 
 // Create indices for fast quering
-usersSchema.index({ email: 1 });
 usersSchema.index({ services: 1 });
 usersSchema.index({ phone: 1 });
 usersSchema.index({ role: 1 });

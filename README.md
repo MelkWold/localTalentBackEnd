@@ -19,6 +19,8 @@ The backend is build using the following tools, packages:
 - bcrypt
 
 ## API EndPoints
+The following API Endpoints allow CRUD operations on the project. 
+Note: Even though all the endpoints are tested and working, some of them are not yet integrated into the frontend because of time. Future developments are planned to fully integrate all the APIs and create additional ones that may be needed.  
 |   Method  |          Endpoint                |    Description                         |
 |-----------|----------------------------------|----------------------------------------|
 |    POST   | /api/auth/register               | Register new user and return JWT Token |
@@ -60,24 +62,3 @@ The backend is build using the following tools, packages:
 
 ## Wireframing
 - Figma (https://www.figma.com/design/1Ua77QBrzd4ws1pCf8jxhn/Local-Talent?node-id=0-1&t=jW26fzXYL3h6w32V-1)
-
-====================ONLY FOR TESTING ================================
-DELETE BEFORE SUBMITING
-This is a temporary username and password for testing! 
-TEST REGISTER a new user: POST /api/auth/register
-{ 
-  "userName": "Melkamu Woldemariam",
-  "email": "melk@melk.com",
-  "password": "BestPassword@2025",
-  "role":"Provider",
-  "services": ["Reading"]
-}
-
-TEST LOGIN an existing user: POST /api/auth/login
-
-{ 
-  "email": "melk@melk.com",
-  "password": "BestPassword@2025"
-}
-
-======================================================================
